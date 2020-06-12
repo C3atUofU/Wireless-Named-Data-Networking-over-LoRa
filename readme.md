@@ -2,7 +2,6 @@
 This repository contains the project and work done to add a LoRa networking face to the Named Data Networking protocol based fowarading software [NFD](https://github.com/named-data/NFD).
 
 ## Installation & Usage
----
 ### Hardware and Libraries
 This code was modified for and tested on the following hardware and software:
 - Raspberry Pi 3B+
@@ -114,7 +113,6 @@ The -l flag specifies the timeout period.
 ### Configuration
 The LoRa module hardware is setup in NFD/daemon/face/lora-factory.cpp in the `setup()` function.
 
----
 ## Files & Modifications
 Modified/Added files:
 - ndn-cxx/ndn-cxx/net/face-uri.cpp
@@ -132,7 +130,6 @@ Modified/Added files:
 - ndnScripts/*
 - nfd.conf
 
----
 ## Authors, Contributors, & Resources
 [Named Data software and libraries](https://github.com/named-data) were modified by:
 - Sean Hammond
