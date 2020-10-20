@@ -37,8 +37,8 @@ sudo apt-get install build-essential pkg-config libboost-all-dev \
 
 Compile and install the modified library in the `ndn-cxx` folder first from the command line:
 ```
-sudo chmod u+x ./waf
 cd ndn-cxx
+sudo chmod u+x ./waf
 CXX=clang++ ./waf configure
 ./waf -j2
 sudo ./waf install
@@ -49,6 +49,7 @@ sudo ldconfig
 Next, compile and install the modified library in the `NFD` folder:
 ```
 cd NFD
+sudo chmod u+x ./waf
 CXX=clang++ ./waf configure
 ```
 At this point if it says that something is missing (websocket app) then follow the instructions to add it, the instructions will be something like:
@@ -69,7 +70,9 @@ cp nfd.conf /usr/local/etc/ndn/nfd.conf
 
 Finally, compile and install ndn-tools. The version provided in the `ndn-tools` folder has not been modified so a new version may be installed from [https://github.com/named-data/ndn-tools](https://github.com/named-data/ndn-tools) by following the instructions posted there. However the `ndn-tools` folder contains a tested working version and can be compiled and installed as follows:
 ```
-CXX=clang++ cd ndn-tools
+cd ndn-tools
+sudo chmod u+x ./waf
+CXX=clang++ ./waf configure
 ./waf -j2
 sudo ./waf install
 ```
@@ -77,6 +80,26 @@ sudo ./waf install
 `CXX=clang++` is used to siginify to [waf](https://waf.io/) (a build system) to use the clang++ compiler.
 
 The -j2 flag is used to limit the number of simultaneous compilations to 2 jobs. This is done to reduce memory usage. Successful compilation has been achieved with 3 jobs, but has also needed to be limited to 1 job depending on what other software is running on the Pi at the time of compilation.
+
+
+#### Susbsequent Compilations
+Once everything has been compiled for the first time and tested working, if any changes are made the compilation and installation will go much faster and requires fewer steps.
+
+If ndn-cxx is modified:
+```
+cd ndn-cxx
+./waf -j2
+sudo ./waf install
+sudo ldconfig
+```
+
+If NFD is modified:
+```
+cd NFD
+./waf -j2
+sudo ./waf install
+```
+
 
 ### Running and testing the software
 Make sure the SX1272 module is connected to the Raspberry Pi. Make sure the Pi is off while connecting the module.
