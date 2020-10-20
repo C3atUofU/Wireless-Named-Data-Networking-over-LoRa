@@ -26,6 +26,7 @@ After installing Raspbian Lite on the Raspberry Pi, Clang 8 must be installed. [
 
 
 ### Compiling & Installation
+#### First Time Compilation
 These build and installation instructions are based off of [this tutorial](https://named-data.net/doc/NFD/current/INSTALL.html) from Named-Data.net. See the tutorial for more in depth instructions.
 
 Install the dependencies first:
@@ -36,16 +37,28 @@ sudo apt-get install build-essential pkg-config libboost-all-dev \
 
 Compile and install the modified library in the `ndn-cxx` folder first from the command line:
 ```
+sudo chmod u+x ./waf
 cd ndn-cxx
 CXX=clang++ ./waf configure
 ./waf -j2
 sudo ./waf install
+sudo ldconfig
 ```
+
 
 Next, compile and install the modified library in the `NFD` folder:
 ```
 cd NFD
 CXX=clang++ ./waf configure
+```
+At this point if it says that something is missing (websocket app) then follow the instructions to add it, the instructions will be something like:
+```
+mkdir -p websocketpp
+curl -L https://github.com/cawka/websocketpp/archive/0.8.1-hotfix.tar.gz > websocketpp.tar.gz
+tar xf websocketpp.tar.gz -C websocketpp/ --strip 1
+```
+Then rerun the config command above and continue:
+```
 ./waf -j2
 sudo ./waf install
 ```
